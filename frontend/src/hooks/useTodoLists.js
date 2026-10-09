@@ -7,13 +7,14 @@ export function useTodoLists() {
 
   return {
     data,
-    async newList(newListName, _icon) {
+    async newList(newListName, icon) {
       const trimmedTitle = (newListName ?? '').trim() || 'Untitled task';
 
       return await mutate(
         await putter({
           url: APIs.TodoLists,
           title: trimmedTitle,
+          icon,
           description: '',
           status: 'pending',
           priority: 'medium',
@@ -26,6 +27,7 @@ export function useTodoLists() {
             {
               id: Date.now(),
               title: trimmedTitle,
+              icon: icon || 'TaskAlt',
               description: '',
               status: 'pending',
               priority: 'medium',

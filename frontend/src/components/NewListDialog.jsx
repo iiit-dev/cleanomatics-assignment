@@ -19,7 +19,7 @@ import { useTodoLists } from '../hooks/useTodoLists.js';
 export function NewListDialog({ dialogState }) {
   const [state, setState] = useState('');
   const [iconSearch, setIconSearch] = useState('');
-  const [icon, setIcon] = useState('');
+  const [icon, setIcon] = useState('TaskAlt');
   const { newList } = useTodoLists();
 
   const [filteredIcons, setFilteredIcons] = useState(Object.entries(Icons));

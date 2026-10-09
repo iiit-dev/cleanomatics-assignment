@@ -19,6 +19,7 @@ function normalizeTaskPayload(payload = {}) {
   return {
     id: nextTaskId++,
     title,
+    icon: typeof payload.icon === 'string' && payload.icon ? payload.icon : 'TaskAlt',
     description,
     status,
     priority,

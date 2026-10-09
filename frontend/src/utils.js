@@ -32,6 +32,7 @@ export async function putter({ url, id, ...variables }) {
     case APIs.TodoLists: {
       const { data } = await api.post('/tasks', {
         title: variables.title ?? variables.name,
+        icon: variables.icon ?? 'TaskAlt',
         description: variables.description ?? '',
         status: variables.status ?? 'pending',
         priority: variables.priority ?? 'medium',
@@ -52,6 +53,7 @@ export async function putter({ url, id, ...variables }) {
     case APIs.TodoList: {
       const { data } = await api.post('/tasks', {
         title: variables.title ?? variables.name,
+        icon: variables.icon ?? 'TaskAlt',
         description: variables.description ?? '',
         status: variables.status ?? 'pending',
         priority: variables.priority ?? 'medium',
