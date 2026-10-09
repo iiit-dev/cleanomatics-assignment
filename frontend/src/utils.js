@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://cleanomatics-assignment.vercel.app/api',
 });
 
 export const APIs = {
