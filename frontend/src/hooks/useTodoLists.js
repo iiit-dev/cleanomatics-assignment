@@ -1,9 +1,11 @@
 import useSWR from 'swr';
 
+import { useAppState } from '../providers/AppState.jsx';
 import { APIs, fetcher, putter } from '../utils.js';
 
 export function useTodoLists() {
   const { data = [], mutate } = useSWR({ url: APIs.TodoLists }, fetcher);
+  const { currentList, setCurrentList } = useAppState();
 
   return {
     data,
@@ -61,6 +63,20 @@ export function useTodoLists() {
       );
 
       return updatedTask;
+    },
+    async deleteList(taskId) {
+      const taskIndex = data.findIndex(task => task.id === taskId);
+      const remainingTasks = data.filter(task => task.id !== taskId);
+
+      await putter({ url: APIs.TodoListDelete, id: taskId });
+      await mutate(remainingTasks, { revalidate: false });
+
+      if (currentList === taskId) {
+        const nextTask = remainingTasks[
+          Math.min(Math.max(taskIndex, 0), remainingTasks.length - 1)
+        ];
+        setCurrentList(nextTask?.id ?? null);
+      }
     },
   };
 }

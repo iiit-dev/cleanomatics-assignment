@@ -10,9 +10,10 @@ import { useEffect } from 'react';
 
 import { useTodoLists } from '../hooks/useTodoLists.js';
 import { useAppState } from '../providers/AppState.jsx';
+import { DeleteTaskButton } from './DeleteTaskButton.jsx';
 
 export function AllTodoLists() {
-  const { data = [] } = useTodoLists();
+  const { data = [], deleteList } = useTodoLists();
   const { currentList, setCurrentList } = useAppState();
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export function AllTodoLists() {
             <ListItemButton
               onClick={() => setCurrentList(task.id)}
               selected={currentList === task.id}
-              sx={{ minWidth: 0 }}
+              sx={{ flex: 1, minWidth: 0, width: 'auto', pr: 1 }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
                 <TaskIcon fontSize="small" />
@@ -56,6 +57,11 @@ export function AllTodoLists() {
                 primaryTypographyProps={{ sx: { overflowWrap: 'anywhere' } }}
               />
             </ListItemButton>
+            <DeleteTaskButton
+              taskId={task.id}
+              taskTitle={task.title}
+              onDelete={deleteList}
+            />
           </ListItem>
         );
       })}

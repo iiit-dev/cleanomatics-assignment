@@ -11,10 +11,11 @@ import useSWR from 'swr';
 import { useTodoLists } from '../hooks/useTodoLists.js';
 import { useAppState } from '../providers/AppState.jsx';
 import { fetcher } from '../utils.js';
+import { DeleteTaskButton } from './DeleteTaskButton.jsx';
 
 export function CurrentTodoList() {
   const { currentList } = useAppState();
-  const { updateList } = useTodoLists();
+  const { updateList, deleteList } = useTodoLists();
   const { data: task } = useSWR(
     () => (currentList ? { url: 'todo-list', id: currentList } : null),
     fetcher
@@ -50,14 +51,21 @@ export function CurrentTodoList() {
       sx={{ flex: '1 1 0', minWidth: 0, p: { xs: 2, sm: 3 } }}
     >
       <Box sx={{ width: '100%', maxWidth: 700, minWidth: 0, display: 'grid', gap: 2 }}>
-        <TextField
-          label="Title"
-          multiline
-          minRows={1}
-          value={draft.title ?? ''}
-          onChange={event => updateField('title', event.target.value)}
-          sx={{ '& textarea': { overflowWrap: 'anywhere' } }}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, minWidth: 0 }}>
+          <TextField
+            label="Title"
+            multiline
+            minRows={1}
+            value={draft.title ?? ''}
+            onChange={event => updateField('title', event.target.value)}
+            sx={{ flex: 1, minWidth: 0, '& textarea': { overflowWrap: 'anywhere' } }}
+          />
+          <DeleteTaskButton
+            taskId={currentList}
+            taskTitle={draft.title}
+            onDelete={deleteList}
+          />
+        </Box>
 
         <TextField
           label="Description"
