@@ -18,4 +18,8 @@ app.use((req, res, next) => {
 app.use('/api/tasks', taskRoutes);
 app.use(errorHandler);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Task Management API');
+});
+
 export default app;
