@@ -3,15 +3,14 @@ import {
   MenuItem,
   Select,
   TextField,
-  Toolbar,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import { fetcher } from '../utils.js';
 import { useTodoLists } from '../hooks/useTodoLists.js';
 import { useAppState } from '../providers/AppState.jsx';
+import { fetcher } from '../utils.js';
 
 export function CurrentTodoList() {
   const { currentList } = useAppState();
@@ -30,9 +29,11 @@ export function CurrentTodoList() {
 
   if (!task || !draft) {
     return (
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        <Typography>No Task Selected</Typography>
+      <Box
+        component="main"
+        sx={{ flex: '1 1 0', minWidth: 0, p: { xs: 2, sm: 3 } }}
+      >
+        <Typography sx={{ overflowWrap: 'anywhere' }}>No Task Selected</Typography>
       </Box>
     );
   }
@@ -44,13 +45,18 @@ export function CurrentTodoList() {
   };
 
   return (
-    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-      <Toolbar />
-      <Box sx={{ maxWidth: 700, display: 'grid', gap: 2 }}>
+    <Box
+      component="main"
+      sx={{ flex: '1 1 0', minWidth: 0, p: { xs: 2, sm: 3 } }}
+    >
+      <Box sx={{ width: '100%', maxWidth: 700, minWidth: 0, display: 'grid', gap: 2 }}>
         <TextField
           label="Title"
+          multiline
+          minRows={1}
           value={draft.title ?? ''}
           onChange={event => updateField('title', event.target.value)}
+          sx={{ '& textarea': { overflowWrap: 'anywhere' } }}
         />
 
         <TextField
@@ -61,13 +67,20 @@ export function CurrentTodoList() {
           onChange={event => updateField('description', event.target.value)}
         />
 
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2,
+            minWidth: 0,
+          }}
+        >
           <TextField
             select
             label="Status"
             value={draft.status ?? 'pending'}
             onChange={event => updateField('status', event.target.value)}
-            sx={{ minWidth: 180 }}
+            sx={{ minWidth: { xs: 0, sm: 180 }, width: { xs: '100%', sm: 'auto' } }}
           >
             <MenuItem value="pending">pending</MenuItem>
             <MenuItem value="in_progress">in_progress</MenuItem>
@@ -79,7 +92,7 @@ export function CurrentTodoList() {
             label="Priority"
             value={draft.priority ?? 'medium'}
             onChange={event => updateField('priority', event.target.value)}
-            sx={{ minWidth: 180 }}
+            sx={{ minWidth: { xs: 0, sm: 180 }, width: { xs: '100%', sm: 'auto' } }}
           >
             <MenuItem value="low">low</MenuItem>
             <MenuItem value="medium">medium</MenuItem>
@@ -95,9 +108,21 @@ export function CurrentTodoList() {
           InputLabelProps={{ shrink: true }}
         />
 
-        <Box sx={{ display: 'flex', gap: 2, color: 'text.secondary' }}>
-          <Typography variant="body2">Created: {draft.createdAt ?? '—'}</Typography>
-          <Typography variant="body2">Updated: {draft.updatedAt ?? '—'}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 1,
+            color: 'text.secondary',
+            minWidth: 0,
+          }}
+        >
+          <Typography variant="body2" sx={{ overflowWrap: 'anywhere' }}>
+            Created: {draft.createdAt ?? '—'}
+          </Typography>
+          <Typography variant="body2" sx={{ overflowWrap: 'anywhere' }}>
+            Updated: {draft.updatedAt ?? '—'}
+          </Typography>
         </Box>
 
         <Select

@@ -34,7 +34,19 @@ export function NewListDialog({ dialogState }) {
   }, [iconSearch]);
 
   return (
-    <Dialog open={dialogState.isOpen} onClose={dialogState.close}>
+    <Dialog
+      open={dialogState.isOpen}
+      onClose={dialogState.close}
+      fullWidth
+      maxWidth="sm"
+      sx={{
+        '& .MuiDialog-paper': {
+          width: { xs: 'calc(100% - 16px)', sm: '100%' },
+          maxHeight: 'calc(100% - 32px)',
+          m: { xs: 1, sm: 2 },
+        },
+      }}
+    >
       <DialogTitle>Create New Task</DialogTitle>
       <DialogContent>
         <DialogContentText>Create a new task and select a suitable icon</DialogContentText>
@@ -67,15 +79,23 @@ export function NewListDialog({ dialogState }) {
         />
         <Card
           variant="outlined"
-          sx={{ mt: 1, p: 1, display: 'flex', justifyContent: 'center' }}
+          sx={{
+            mt: 1,
+            p: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: 1,
+            minWidth: 0,
+          }}
         >
           {filteredIcons.map(([name, Icon]) => (
             <Box
               sx={{
                 display: 'inline-flex',
                 flexDirection: 'column',
-                width: 40,
-                mx: 1,
+                width: 48,
+                minWidth: 0,
               }}
               key={name}
             >
@@ -89,7 +109,7 @@ export function NewListDialog({ dialogState }) {
               <Typography
                 variant="caption"
                 align="center"
-                sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+                sx={{ overflowWrap: 'anywhere' }}
               >
                 {name}
               </Typography>

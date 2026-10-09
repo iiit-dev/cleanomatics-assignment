@@ -14,15 +14,19 @@ export function AppHeader() {
         position="fixed"
         sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
       >
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, minWidth: 0, overflowWrap: 'anywhere' }}
+          >
             Task Lists
           </Typography>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
+            aria-label="Create task"
             onClick={dialogState.open}
           >
             <Add />

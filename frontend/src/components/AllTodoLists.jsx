@@ -5,7 +5,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
 } from '@mui/material';
 import { useEffect } from 'react';
 
@@ -25,14 +24,19 @@ export function AllTodoLists() {
   return (
     <List
       sx={{
-        width: 280,
-        minWidth: 280,
-        borderRight: 1,
+        width: { xs: '100%', md: 280 },
+        minWidth: { xs: 0, md: 280 },
+        maxWidth: '100%',
+        maxHeight: { xs: '34vh', md: 'calc(100vh - 64px)' },
+        flex: { xs: '0 0 auto', md: '0 0 280px' },
+        overflowY: 'auto',
+        boxSizing: 'border-box',
+        borderRight: { xs: 0, md: 1 },
+        borderBottom: { xs: 1, md: 0 },
         borderColor: 'divider',
         pt: 0,
       }}
     >
-      <Toolbar />
       {data.map(task => {
         const TaskIcon = Icons[task.icon] ?? Icons.TaskAlt;
 
@@ -41,11 +45,16 @@ export function AllTodoLists() {
             <ListItemButton
               onClick={() => setCurrentList(task.id)}
               selected={currentList === task.id}
+              sx={{ minWidth: 0 }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 40 }}>
                 <TaskIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={task.title || 'Untitled task'} />
+              <ListItemText
+                primary={task.title || 'Untitled task'}
+                sx={{ minWidth: 0 }}
+                primaryTypographyProps={{ sx: { overflowWrap: 'anywhere' } }}
+              />
             </ListItemButton>
           </ListItem>
         );
